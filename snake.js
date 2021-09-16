@@ -11,11 +11,15 @@ function drawSnakePart(x, y) {
     context.fillRect(x, y, WIDTH, HEIGHT);
 }
 
-drawSnakePart(10, 10);
-drawSnakePart(20, 10);
-drawSnakePart(30, 10);
-drawSnakePart(30, 20);
-drawSnakePart(30, 30);
+for(let x = 10; x <= 50; x = x + 10) {
+    drawSnakePart(x, 50);
+}
+
+// drawSnakePart(10, 10);
+// drawSnakePart(20, 10);
+// drawSnakePart(30, 10);
+// drawSnakePart(40, 10);
+// drawSnakePart(50, 10);
 
 // context.fillRect(10, 10, WIDTH, HEIGHT);
 // context.fillRect(20, 10, WIDTH, HEIGHT);
