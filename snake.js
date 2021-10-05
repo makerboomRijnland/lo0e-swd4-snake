@@ -13,27 +13,61 @@ let context = canvas.getContext("2d");
 
 let snake = {
     direction: DOWN,
-    parts: [{ x: 10, y: 20 }, { x: 10, y: 10 }],
+    parts: [ // 0 => head
+        { x: 10, y: 30 },  // x: 20, y: 30
+        { x: 10, y: 20 },  // x: 10, y: 30
+        { x: 10, y: 10 }], // x: 10, y: 20
 };
 
+let apple = {
+    x: null,
+    y: null
+};
+
+
 function refresh() {
-    for (let index = 0; index < snake.parts.length; index++) {
+    for (let index = snake.parts.length - 1; index >= 1; index--) {
         let part = snake.parts[index];
-        if (snake.direction == RIGHT) {
-            part.x = part.x + WIDTH;
+        let prevPart = snake.parts[index - 1];
+        
+        part.x = prevPart.x;
+        part.y = prevPart.y;
+    }
+
+    let head = snake.parts[0];
+    if (snake.direction == RIGHT) {
+        head.x = head.x + WIDTH;
+    } else {
+        if (snake.direction == LEFT) {
+            head.x = head.x - WIDTH;
         } else {
-            if (snake.direction == LEFT) {
-                part.x = part.x - WIDTH;
+            if (snake.direction == UP) {
+                head.y = head.y - HEIGHT;
             } else {
-                if (snake.direction == UP) {
-                    part.y = part.y - HEIGHT;
-                } else {
-                    part.y = part.y + HEIGHT;
-                }
+                head.y = head.y + HEIGHT;
             }
         }
     }
+    
+    // HEAD HAS NEW POSITION;
+
     drawSnake();
+    drawApple();
+}
+
+function eatApple() {
+    // Als x & y van snake.parts[0] gelijk zijn aan de x & y van de apple.
+    // Voeg een nieuw element toe aan de snake.parts.
+}
+
+function spawnApple() {
+    apple.x = Math.round(Math.random() * 60) * 10;
+    apple.y = Math.round(Math.random() * 40) * 10;
+}
+
+function drawApple(){
+    context.fillStyle = "red";
+    context.fillRect(apple.x, apple.y, WIDTH, HEIGHT);
 }
 
 function drawSnake() {
@@ -78,5 +112,6 @@ function changeDirection(event) {
 document.addEventListener("keydown", changeDirection);
 
 setInterval(refresh, 1000);
+spawnApple();
 
 // reageren op pijltjes toetsen.
